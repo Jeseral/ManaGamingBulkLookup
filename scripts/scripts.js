@@ -1,27 +1,33 @@
+/*------------------------------------------------------------------------ 
+** Const Declarations
+*/
 const STEM = "http://www.managaming.shop/products/search?q="
 
 const REGEX = /^(\d+ )?([fFbB]* )?(.+?)$/;
+const REGEX_GROUP_TOTAL = 1;
+const REGEX_GROUP_MODS  = 2;
+const REGEX_GROUP_NAME  = 3;
 
-const replace_list = [
+const REPLACE_LIST = [
     [",", "%2C"],
     ["'", "%27"],
     ["/", "%2F"],
     [" ", "+"]
-]
+];
+const REPLACE_LIST_TARGET = 0;
+const REPLACE_LIST_REPLACEMENT = 1;
 
-const mods_list = [
-    // ["e", "+extended"],
+const MODS_LIST = [
     ["f", "+foil", "\u{2728}"],
-    // ["a", "+altered"],
-    // ["p", "+promo"],
     ["b", "+borderless", "\u{1F3A8}"]
-]
+];
+const MODS_LIST_MOD = 0;
+const MODS_LIST_REPLACEMENT = 1;
+const MODS_LIST_ICON = 2;
 
-const GROUP_TOTAL = 1;
-const GROUP_MODS  = 2;
-const GROUP_NAME  = 3;
-
-
+/*------------------------------------------------------------------------ 
+**
+*/
 function generateClicked()
 {
     let card_list = document.getElementById("card_list");
@@ -43,32 +49,38 @@ function generateClicked()
             continue;
         }
 
-        links_list.appendChild(generateURL(line));
+        links_list.appendChild(generateTableEntry(line));
     }
 }
 
 
-function generateURL(line) {
+/*------------------------------------------------------------------------ 
+**
+*/
+function generateTableEntry(line) {
     let matches = REGEX.exec(line);
 
-    let total = matches[GROUP_TOTAL];
-    let mods  = matches[GROUP_MODS];
-    let name  = matches[GROUP_NAME];
+    let total = matches[REGEX_GROUP_TOTAL];
+    let mods  = matches[REGEX_GROUP_MODS];
+    let name  = matches[REGEX_GROUP_NAME];
 
     let output_string = name;
     let icons = [];
 
     if (mods) {
-        for (i in mods_list) {
-            if (mods.includes(mods_list[i][0])) {
-                output_string += mods_list[i][1];
-                icons.push(mods_list[i][2]);
+        for (i in MODS_LIST) {
+            if (mods.includes(MODS_LIST[i][MODS_LIST_MOD]) 
+                || mods.includes(MODS_LIST[i][MODS_LIST_MOD].toUpperCase())) {
+
+                output_string += MODS_LIST[i][MODS_LIST_REPLACEMENT];
+                icons.push(MODS_LIST[i][MODS_LIST_ICON]);
             }
         }
     }
 
-    for (i in replace_list) {
-        output_string.replace(replace_list[i][0], replace_list[i][1]);
+    for (i in REPLACE_LIST) {
+        output_string.replace(REPLACE_LIST[i][REPLACE_LIST_TARGET], 
+                              REPLACE_LIST[i][REPLACE_LIST_REPLACEMENT]);
     }
 
     output_string = output_string.trim();
@@ -98,3 +110,7 @@ function generateURL(line) {
 
     return ret;
 }
+
+/*------------------------------------------------------------------------ 
+** End of File
+*/
