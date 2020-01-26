@@ -94,9 +94,10 @@ function generateTableEntry(line) {
     ret.appendChild(total_td);
     ret.appendChild(link_td);
     ret.appendChild(icons_td);
-    
+
+    total_td.setAttribute("class", "total_indicator");
     total_td.appendChild(document.createTextNode (
-                            (total ? total.trim() : "1") + "x"));
+        (total ? total.trim() : "1") + "x"));
 
     let link = document.createElement("a");
     link.setAttribute("href", STEM + output_string);

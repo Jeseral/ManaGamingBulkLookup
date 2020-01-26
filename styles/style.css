@@ -97,3 +97,7 @@ button:active {
 #links_list_table tr:nth-child(even) {
     background-color: #bbb;
 }
+
+.total_indicator {
+    font-weight: bold;
+}
