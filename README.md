@@ -1,7 +1,7 @@
 # ManaGamingBulkLookup
 Converts a list of cards into a list of store links
 
-## Version: 1.0.0
+## Version: 1.0.1
 
 ### Usage:
 
